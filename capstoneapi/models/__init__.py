@@ -6,3 +6,5 @@ from .job_posting import Job_Posting
 from .resume import Resume
 from .review import Review
 from .skills import Skills
+from .posting_skill import Posting_Skill
+from .company import Company

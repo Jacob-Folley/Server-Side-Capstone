@@ -5,7 +5,7 @@ from capstoneapi.serializers import ApplicantSerializer, ApplicantCreateSerializ
 from capstoneapi.models import Applicant
 
 
-class Applicant(ViewSet):
+class ApplicantView(ViewSet):
     def retrieve(self, request, pk):
         """Handle GET requests for single applicant
         Returns:

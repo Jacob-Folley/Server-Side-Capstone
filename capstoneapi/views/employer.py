@@ -5,7 +5,7 @@ from capstoneapi.serializers import EmployerSerializer, EmployerCreateSerializer
 from capstoneapi.models import Employer
 
 
-class Employer(ViewSet):
+class EmployerView(ViewSet):
     def retrieve(self, request, pk):
         """Handle GET requests for single employer
         Returns:

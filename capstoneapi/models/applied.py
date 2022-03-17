@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from capstoneapi.models import Job_Posting
+from capstoneapi.models.job_posting import Job_Posting
 
 
 class Applied(models.Model):

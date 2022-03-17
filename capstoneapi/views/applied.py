@@ -5,7 +5,7 @@ from capstoneapi.serializers import AppliedSerializer, AppliedCreateSerializer
 from capstoneapi.models import Applied, Applicant
 
 
-class Applied(ViewSet):
+class AppliedView(ViewSet):
     def retrieve(self, request, pk):
         """Handle GET requests for single applied
         Returns:

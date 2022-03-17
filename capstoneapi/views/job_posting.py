@@ -5,7 +5,7 @@ from capstoneapi.serializers import JobPostingSerializer, JobPostingCreateSerial
 from capstoneapi.models import Job_Posting, Employer
 
 
-class Job_Posting(ViewSet):
+class Job_PostingView(ViewSet):
     def retrieve(self, request, pk):
         """Handle GET requests for single job posting
         Returns:
@@ -27,7 +27,7 @@ class Job_Posting(ViewSet):
 
     def create(self, request):
         """Handle post requests to job posting"""
-        user = Employer.objects.get(user=request.auth.user)
+        user = request.auth.user
         serializer = JobPostingCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(employer=user)

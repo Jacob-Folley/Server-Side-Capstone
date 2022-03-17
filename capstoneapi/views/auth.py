@@ -53,28 +53,26 @@ def register_user(request):
         last_name=request.data['last_name']
     )
 
-    # if applicant :
-    #     # Now save the extra info in the levelupapi_gamer table
-    #     applicant = Applicant.objects.create(
-    #         bio=request.data['bio'],
-    #         user=new_user
-    #     )
+    if request.data['acctype'] == 'Applicant' :
+        # Now save the extra info in the levelupapi_gamer table
+        applicant = Applicant.objects.create(
+            user=new_user
+        )
 
-    #     # Use the REST Framework's token generator on the new user account
-    #     token = Token.objects.create(user=applicant.user)
-    #     # Return the token to the client
-    #     data = { 'token': token.key }
-    #     return Response(data, status=201)
+        # Use the REST Framework's token generator on the new user account
+        token = Token.objects.create(user=applicant.user)
+        # Return the token to the client
+        data = { 'token': token.key, 'isEmployer': False }
+        return Response(data, status=201)
     
-    # else : 
-    #     # Now save the extra info in the levelupapi_gamer table
-    #     employer = Employer.objects.create(
-    #         bio=request.data['bio'],
-    #         user=new_user
-    #     )
+    else : 
+        # Now save the extra info in the levelupapi_gamer table
+        employer = Employer.objects.create(
+            user=new_user
+        )
 
-    #     # Use the REST Framework's token generator on the new user account
-    #     token = Token.objects.create(user=employer.user)
-    #     # Return the token to the client
-    #     data = { 'token': token.key }
-    #     return Response(data, status=201)
+        # Use the REST Framework's token generator on the new user account
+        token = Token.objects.create(user=employer.user)
+        # Return the token to the client
+        data = { 'token': token.key, 'isEmployer': True}
+        return Response(data, status=201)

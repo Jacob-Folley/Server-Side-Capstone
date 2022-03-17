@@ -5,7 +5,7 @@ from capstoneapi.serializers import SkillSerializer, SkillCreateSerializer
 from capstoneapi.models import Skills, Employer
 
 
-class Skills(ViewSet):
+class SkillsView(ViewSet):
     def retrieve(self, request, pk):
         """Handle GET requests for single skill
         Returns:
@@ -30,7 +30,7 @@ class Skills(ViewSet):
         user = Employer.objects.get(user=request.auth.user)
         serializer = SkillCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(employer=user)
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk):

@@ -1,20 +1,20 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from capstoneapi.serializers import ResumeSerializer, ResumeCreateSerializer
-from capstoneapi.models import Resume, Applicant
+from capstoneapi.serializers import CompanySerializer, CompanyCreateSerializer
+from capstoneapi.models import Company, Employer
 
 
-class ResumeView(ViewSet):
+class CompanyView(ViewSet):
     def retrieve(self, request, pk):
-        """Handle GET requests for single resume
+        """Handle GET requests for single company
         Returns:
             Response -- JSON serialized game type"""
         try:
-            resume = Resume.objects.get(pk=pk)
-            serializer = ResumeSerializer(resume)
+            company = Company.objects.get(pk=pk)
+            serializer = CompanySerializer(company)
             return Response(serializer.data)
-        except Resume.DoesNotExist as ex:
+        except Company.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     # NEED TO ADD A FILTER TO THIS SO ONLY CAN GET A LIST OF RESUMES POSTED BY THAT APPLICANT
@@ -27,27 +27,27 @@ class ResumeView(ViewSet):
     #     return Response(serializer.data)
 
     def create(self, request):
-        """Handle post requests to resume"""
-        user = Applicant.objects.get(user=request.auth.user)
-        serializer = ResumeCreateSerializer(data=request.data)
+        """Handle post requests to company"""
+        user = request.auth.user
+        serializer = CompanyCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(applicant=user)
+        serializer.save(employer=user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk):
-        """Update Resume"""
+        """Update Company"""
         try:
-            resume = Resume.objects.get(pk=pk)
-            serializer = ResumeCreateSerializer(resume, data=request.data)
+            company = Company.objects.get(pk=pk)
+            serializer = CompanyCreateSerializer(company, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(None, status=status.HTTP_204_NO_CONTENT)
-        except Resume.DoesNotExist as ex:
+        except Company.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
     def destroy(self, request, pk):
-        """Delete Resume"""
-        resume = Resume.objects.get(pk=pk)
-        resume.delete()
+        """Delete Company"""
+        company = Company.objects.get(pk=pk)
+        company.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
