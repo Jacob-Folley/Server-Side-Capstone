@@ -1,14 +1,14 @@
 from rest_framework import serializers
-from capstoneapi.models import Applicant
+from capstoneapi.models import UserType
 
 
 class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Applicant
+        model = UserType
         fields = ('__all__')
-        depth = 1
+        depth = 2
 
 class ApplicantCreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Applicant
-        fields = ['name', 'user']
+        model = UserType
+        fields = ['name', 'user', 'isEmployer']

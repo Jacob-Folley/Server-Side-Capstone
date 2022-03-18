@@ -2,7 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from capstoneapi.serializers import SkillSerializer, SkillCreateSerializer
-from capstoneapi.models import Skills, Employer
+from capstoneapi.models import Skills, UserType
 
 
 class SkillsView(ViewSet):
@@ -27,7 +27,7 @@ class SkillsView(ViewSet):
 
     def create(self, request):
         """Handle post requests to skills"""
-        user = Employer.objects.get(user=request.auth.user)
+        user = UserType.objects.get(user=request.auth.user)
         serializer = SkillCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django import forms
 
 class Resume(models.Model):
     applicant = models.ForeignKey(

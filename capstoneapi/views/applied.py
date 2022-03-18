@@ -2,7 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from capstoneapi.serializers import AppliedSerializer, AppliedCreateSerializer
-from capstoneapi.models import Applied, Applicant
+from capstoneapi.models import Applied, UserType
 
 
 class AppliedView(ViewSet):
@@ -27,7 +27,7 @@ class AppliedView(ViewSet):
 
     def create(self, request):
         """Handle post requests to applied"""
-        user = Applicant.objects.get(user=request.auth.user)
+        user = UserType.objects.get(user=request.auth.user)
         serializer = AppliedCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(applicant=user)

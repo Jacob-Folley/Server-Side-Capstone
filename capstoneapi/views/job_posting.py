@@ -2,7 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from capstoneapi.serializers import JobPostingSerializer, JobPostingCreateSerializer
-from capstoneapi.models import Job_Posting, Employer
+from capstoneapi.models import Job_Posting
 
 
 class Job_PostingView(ViewSet):

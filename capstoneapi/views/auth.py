@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from capstoneapi.models import Applicant, Employer
+from capstoneapi.models import UserType
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -21,14 +21,16 @@ def login_user(request):
     # Use the built-in authenticate method to verify
     # authenticate returns the user object or None if no user is found
     authenticated_user = authenticate(username=username, password=password)
-
+    app_user = UserType.objects.get(user=authenticated_user)
     # If authentication was successful, respond with their token
     if authenticated_user is not None:
         token = Token.objects.get(user=authenticated_user)
         data = {
             'valid': True,
-            'token': token.key
-        }
+            'token': token.key,
+            'isEmployer': app_user.isEmployer,
+            'userId': authenticated_user.id
+            }
         return Response(data)
     else:
         # Bad login details were provided. So we can't log the user in.
@@ -55,24 +57,26 @@ def register_user(request):
 
     if request.data['acctype'] == 'Applicant' :
         # Now save the extra info in the levelupapi_gamer table
-        applicant = Applicant.objects.create(
-            user=new_user
+        applicant = UserType.objects.create(
+            user=new_user,
+            isEmployer = False
         )
 
         # Use the REST Framework's token generator on the new user account
         token = Token.objects.create(user=applicant.user)
         # Return the token to the client
-        data = { 'token': token.key, 'isEmployer': False }
+        data = { 'token': token.key, 'isEmployer': False, 'userId': new_user.id }
         return Response(data, status=201)
     
     else : 
         # Now save the extra info in the levelupapi_gamer table
-        employer = Employer.objects.create(
-            user=new_user
+        employer = UserType.objects.create(
+            user=new_user,
+            isEmployer = True
         )
 
         # Use the REST Framework's token generator on the new user account
         token = Token.objects.create(user=employer.user)
         # Return the token to the client
-        data = { 'token': token.key, 'isEmployer': True}
+        data = { 'token': token.key, 'isEmployer': True, 'userId': new_user.id}
         return Response(data, status=201)
