@@ -4,4 +4,5 @@ from .jobposting_serializer import JobPostingSerializer, JobPostingCreateSeriali
 from .resume_serializer import ResumeSerializer, ResumeCreateSerializer
 from .skill_serializer import SkillSerializer, SkillCreateSerializer
 from .company_serializer import CompanySerializer, CompanyCreateSerializer
+from .accepted_serializer import AcceptedSerializer, AcceptedCreateSerializer
 

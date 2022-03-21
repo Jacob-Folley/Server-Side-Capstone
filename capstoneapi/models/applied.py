@@ -4,7 +4,7 @@ from capstoneapi.models.job_posting import Job_Posting
 
 
 class Applied(models.Model):
-    posting = models.ForeignKey(Job_Posting, on_delete=models.CASCADE)
+    posting = models.ForeignKey(Job_Posting, on_delete=models.CASCADE, related_name ='applications')
     applicant = models.ForeignKey(User, on_delete=models.CASCADE)
     isAccepted = models.BooleanField(default=False)
     isRejected = models.BooleanField(default=False)

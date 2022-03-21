@@ -5,8 +5,8 @@ from capstoneapi.models import Job_Posting
 class JobPostingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job_Posting
-        fields = ('__all__')
-        depth = 1
+        fields = ('id', 'employer', 'title', 'description', 'skills', 'applications')
+        depth = 2
 
 class JobPostingCreateSerializer(serializers.ModelSerializer):
     class Meta:

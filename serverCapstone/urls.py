@@ -4,7 +4,7 @@ from django.conf.urls import include
 from django.urls import path
 from capstoneapi.views import register_user, login_user
 from rest_framework import routers
-from capstoneapi.views import ApplicantView, AppliedView, Job_PostingView, ResumeView, SkillsView, CompanyView
+from capstoneapi.views import ApplicantView, AppliedView, Job_PostingView, ResumeView, SkillsView, CompanyView, AcceptedView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'applicants', ApplicantView, 'applicant')
@@ -13,6 +13,7 @@ router.register(r'jobpostings', Job_PostingView, 'jobposting')
 router.register(r'resumes', ResumeView, 'resume')
 router.register(r'skills', SkillsView, 'skill')
 router.register(r'company', CompanyView, 'companies')
+router.register(r'accepted', AcceptedView, 'accept')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
