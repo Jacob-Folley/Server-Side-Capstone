@@ -6,7 +6,7 @@ class AppliedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Applied
         fields = ('__all__')
-        depth = 1
+        depth = 3
 
 class AppliedCreateSerializer(serializers.ModelSerializer):
     class Meta:

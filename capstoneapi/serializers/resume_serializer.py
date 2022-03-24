@@ -11,4 +11,4 @@ class ResumeSerializer(serializers.ModelSerializer):
 class ResumeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
-        fields = ['applicant', 'resume', 'skills']
+        fields = ['applicant', 'skills']

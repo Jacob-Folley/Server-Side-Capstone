@@ -1,0 +1,1 @@
+DELETE FROM capstoneapi_accepted;

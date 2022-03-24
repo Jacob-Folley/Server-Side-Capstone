@@ -6,7 +6,7 @@ class AcceptedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Accepted
         fields = ('__all__')
-        depth = 1
+        depth = 3
 
 class AcceptedCreateSerializer(serializers.ModelSerializer):
     class Meta:

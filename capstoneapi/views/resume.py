@@ -3,21 +3,18 @@ from rest_framework.response import Response
 from rest_framework import status
 from capstoneapi.serializers import ResumeSerializer, ResumeCreateSerializer, SkillSerializer
 from capstoneapi.models import Resume, UserType, Skills
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
 # from somewhere import handle_uploaded_file
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+import uuid
+import base64
+from django.core.files.base import ContentFile
+
+
 
 class ResumeView(ViewSet):
-
-    # def upload_file(request):
-    #     if request.method == 'POST':
-    #         form = Resume(request.POST, request.FILES)
-    #         if form.is_valid():
-    #             handle_uploaded_file(request.FILES['file'])
-    #             return HttpResponseRedirect('/success/url/')
-    #     else:
-    #         form = Resume()
-    #     return render(request, 'upload.html', {'form': form})
 
     def retrieve(self, request, pk):
         """Handle GET requests for single resume
@@ -40,10 +37,14 @@ class ResumeView(ViewSet):
 
     def create(self, request):
         """Handle post requests to resume"""
-        user = UserType.objects.get(user=request.auth.user)
+        user = request.auth.user
+        
+        format, imgstr = request.data["resume"].split(';base64,')
+        ext = format.split('/')[-1]
+        data = ContentFile(base64.b64decode(imgstr), name=f'{request.data["resume"]}-{uuid.uuid4()}.{ext}')
         serializer = ResumeCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(applicant=user)
+        serializer.save(applicant=user, resume=data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, pk):

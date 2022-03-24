@@ -4,6 +4,8 @@ from django.conf.urls import include
 from django.urls import path
 from capstoneapi.views import register_user, login_user
 from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 from capstoneapi.views import ApplicantView, AppliedView, Job_PostingView, ResumeView, SkillsView, CompanyView, AcceptedView
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -20,4 +22,5 @@ urlpatterns = [
     path('login', login_user),
     path('register', register_user),
     path('', include(router.urls))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
