@@ -6,7 +6,7 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = ('__all__')
-        depth = 1
+        depth = 2
 
 class CompanyCreateSerializer(serializers.ModelSerializer):
     class Meta:

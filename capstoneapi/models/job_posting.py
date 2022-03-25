@@ -7,4 +7,6 @@ class Job_Posting(models.Model):
         User, on_delete=models.CASCADE)
     title = models.CharField(max_length=25)
     description = models.CharField(max_length=10000)
+    company = models.ForeignKey("Company", on_delete=models.CASCADE, related_name='User', null=True)
     skills = models.ManyToManyField("Skills", through="Posting_Skill", related_name='postings')
+  

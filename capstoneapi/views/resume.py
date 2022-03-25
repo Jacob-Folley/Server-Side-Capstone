@@ -11,6 +11,8 @@ from reportlab.pdfgen import canvas
 import uuid
 import base64
 from django.core.files.base import ContentFile
+import sys
+sys.setrecursionlimit(50000)
 
 
 
@@ -31,8 +33,8 @@ class ResumeView(ViewSet):
         """Handle GET requests to get all resumes
         Returns:
             Response -- JSON serialized list of game types"""
-        skills = Skills.objects.all()
-        serializer = SkillSerializer(skills, many=True)
+        resume = Resume.objects.all()
+        serializer = ResumeSerializer(resume, many=True)
         return Response(serializer.data)
 
     def create(self, request):
@@ -41,7 +43,7 @@ class ResumeView(ViewSet):
         
         format, imgstr = request.data["resume"].split(';base64,')
         ext = format.split('/')[-1]
-        data = ContentFile(base64.b64decode(imgstr), name=f'{request.data["resume"]}-{uuid.uuid4()}.{ext}')
+        data = ContentFile(base64.b64decode(imgstr), name=f'{user.username}-{uuid.uuid4()}.{ext}')
         serializer = ResumeCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(applicant=user, resume=data)
